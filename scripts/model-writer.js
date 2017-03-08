@@ -29,6 +29,14 @@ $(document).ready(function(){
     $("#types").on("change", function () {
         $("input#add-type").val($(this).val());
     });
+    $("#form-model-writer").on("change", "select[name='arg_type[]']", function () {
+        if ($(this).val() != "") return;
+        if ($(".args").length > 1){
+            $(this).parent().remove();
+        } else {
+            modal_errors('You must have at least one model property!');
+        }
+    });
     ModelWriter.populatePropertyTypes();
 });
 var ModelWriter = {};
@@ -81,6 +89,9 @@ ModelWriter.populatePropertyTypes = function() {
     $("select[name='types']").append(mainOption1);
     $("select[name='arg_type[]']").append(otherOption1);
     selects.append(typeList);
+    var removeProperty = "<option value='' disabled>-------</option>";
+    removeProperty += "<option value=''>Remove Model Property</option>";
+    $("select[name='arg_type[]']").append(removeProperty);
 }
 ModelWriter.ucfirst = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -178,13 +189,6 @@ ModelWriter.write = function(isPlainText) {
             output = "Language Not Available!";
     }
     return output;
-}
-function remove_model_property(ele){
-    if ($(".args").length > 1){
-        ele.remove();
-    } else {
-        modal_errors('You must have at least one model property!');
-    }
 }
 
 function modal_errors(html){
