@@ -1,60 +1,16 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-  <title>Symfony Model Writer</title>
-  <link rel="icon" href="http://marie.kauths.com/images/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <meta charset="UTF-8">
-  <script>
-        $(document).ready(function(){
-			$("#form-model-writer").on('submit', function(e){
-				e.preventDefault();
-				$.ajax({
-					url: 'model-writer-ajax.php', 
-					method: 'post',
-					data: $("#form-model-writer").serialize(),
-					success: function(result){
-						$("#result").html(result);
-					}
-				});
-			});
-			
-			$("#btn-add-model-property").on('click', function(){
-				var ele = $(".args").first().clone();
-				$(".args-container").append(ele);
-			});
-		});
-		
-		function remove_model_property(ele){
-			if ($(".args").length > 1){
-				ele.remove();
-			} else {
-				modal_errors('You must have at least one model property!');
-			}
-		}
-		
-		function modal_errors(html){
-		    var modal_width = 340;
-		    if($(window).width() > 650){
-		        modal_width = 600;
-		    }
-		    $("#modal_errors").html(html).dialog({
-		        modal: true,
-				title: 'Errors',
-		        width: modal_width,
-		        buttons: {
-			        Ok: function(){
-				        $(this).dialog("close");
-			        }
-		        }
-		    });
-		}
-  </script>
+    <title>Symfony Model Writer</title>
+    <link rel="icon" href="http://marie.kauths.com/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <meta charset="UTF-8">
+    <script src="../scripts/model-writer.js"></script>
 </head>
 <body>
     <div class="container">
@@ -69,6 +25,29 @@
 	        does all the work for you including the spacing and this tool is not necessary.
         </p>
         <form id="form-model-writer">
+            <div class="form-group">
+                <label for="language">Language:</label>
+                <select id="language" name="language" class="form-control">
+                    <option value="php">PHP</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="types">Add Custom Property Types:</label>
+                <select id="types" name="types" class="form-control">
+                    <option value="boolean">boolean</option>
+                    <option value="int">int</option>
+                    <option value="number">number</option>
+                    <option value="string">string</option>
+                    <option value="array">array</option>
+                    <option value="object">object</option>
+                    <option value="" disabled>--------</option>
+                </select>
+                <br>
+                <input id="add-type" name="add-type" placeholder="MyCustomClass" class="form-control">
+                <br>
+                <button onClick="ModelWriter.removePropertyType()" class="btn">Remove Custom Property Type</button>
+                <button onClick="ModelWriter.addPropertyType()" class="btn">Add Custom Property Type</button>
+            </div>
             <div class="form-group">
                 <label for="company">Company Name:</label>
                 <input type="company" class="form-control" id="company" name="company" placeholder="Enter company">
@@ -86,9 +65,7 @@
                     <label for="pwd">Property Name/Type:</label>
                     <input type="arg_name" class="form-control" id="arg_name[]" name="arg_name[]" placeholder="Enter property name">
     				<br>
-                    <input type="arg_type" class="form-control" id="arg_type[]" name="arg_type[]" placeholder="Enter property type">
-					<br>
-					<button type="button" class="btn btn-remove-model-property" onClick="remove_model_property($(this).parent());">Remove Model Property</button>
+                    <select class="form-control" id="arg_type[]" name="arg_type[]"></select>
                 </div>
 			</div>
 			<p>
