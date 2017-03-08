@@ -27,9 +27,26 @@
         <form id="form-model-writer">
             <div class="form-group">
                 <label for="language">Language:</label>
-                <select id="language" name="language">
+                <select id="language" name="language" class="form-control">
                     <option value="php">PHP</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="types">Add Custom Property Types:</label>
+                <select id="types" name="types" class="form-control">
+                    <option value="boolean">boolean</option>
+                    <option value="int">int</option>
+                    <option value="number">number</option>
+                    <option value="string">string</option>
+                    <option value="array">array</option>
+                    <option value="object">object</option>
+                    <option value="" disabled>--------</option>
+                </select>
+                <br>
+                <input id="add-type" name="add-type" placeholder="MyCustomClass" class="form-control">
+                <br>
+                <button onClick="ModelWriter.removePropertyType()" class="btn">Remove Custom Property Type</button>
+                <button onClick="ModelWriter.addPropertyType()" class="btn">Add Custom Property Type</button>
             </div>
             <div class="form-group">
                 <label for="company">Company Name:</label>
@@ -48,7 +65,8 @@
                     <label for="pwd">Property Name/Type:</label>
                     <input type="arg_name" class="form-control" id="arg_name[]" name="arg_name[]" placeholder="Enter property name">
     				<br>
-                    <input type="arg_type" class="form-control" id="arg_type[]" name="arg_type[]" placeholder="Enter property type">
+                    <!--<input type="arg_type" class="form-control" id="arg_type[]" name="arg_type[]" placeholder="Enter property type">-->
+                    <select class="form-control" id="arg_type[]" name="arg_type[]"></select>
 					<br>
 					<button type="button" class="btn btn-remove-model-property" onClick="remove_model_property($(this).parent());">Remove Model Property</button>
                 </div>
