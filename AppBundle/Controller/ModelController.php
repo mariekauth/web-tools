@@ -59,7 +59,7 @@ class ModelController
             $str .= '&nbsp;&nbsp;&nbsp;&nbsp; */<br>';
             $str .= '&nbsp;&nbsp;&nbsp;&nbsp;public function set' . ucfirst($arg) . '($' . $arg . ')<br>';
             $str .= '&nbsp;&nbsp;&nbsp;&nbsp;{<br>';
-            $str .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp$this->' . $arg . ' = $' . $arg . '<br>';
+            $str .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp$this->' . $arg . ' = $' . $arg . ';<br>';
             $str .= '&nbsp;&nbsp;&nbsp;&nbsp;}<br>';	
         }
 		
